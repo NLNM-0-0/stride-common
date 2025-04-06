@@ -13,5 +13,5 @@ public abstract class JpaBaseEntity extends JpaAuditEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private String id;
 }

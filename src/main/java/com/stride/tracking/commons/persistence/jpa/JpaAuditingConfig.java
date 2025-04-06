@@ -11,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Optional;
 
 @Configuration
+@ConditionalOnProperty(name = "spring.datasource.url")
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
-@ConditionalOnProperty(name = "spring.datasource.url", havingValue = "true")
 public class JpaAuditingConfig {
 
     @Bean

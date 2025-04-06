@@ -11,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Optional;
 
 @Configuration
+@ConditionalOnProperty(name = "spring.data.mongo.uri")
 @EnableMongoAuditing(auditorAwareRef = "auditorProvider")
-@ConditionalOnProperty(name = "spring.data.mongo.uri", havingValue = "true")
 public class MongoAuditingConfig {
 
     @Bean

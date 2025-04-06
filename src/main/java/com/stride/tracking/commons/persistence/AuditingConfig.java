@@ -1,4 +1,4 @@
-package com.stride.tracking.commons.persistence.mongo;
+package com.stride.tracking.commons.persistence;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Optional;
 
 @Configuration
-public class MongoAuditingConfig {
+public class AuditingConfig {
 
     @Bean
     public AuditorAware<String> auditorProvider() {

@@ -1,5 +1,6 @@
 package com.stride.tracking.commons.persistence.jpa;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
+@ConditionalOnProperty(name = "spring.datasource.url", havingValue = "true")
 public class JpaAuditingConfig {
 
     @Bean

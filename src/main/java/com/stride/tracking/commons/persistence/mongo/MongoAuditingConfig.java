@@ -1,5 +1,6 @@
 package com.stride.tracking.commons.persistence.mongo;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Configuration
 @EnableMongoAuditing(auditorAwareRef = "auditorProvider")
+@ConditionalOnProperty(name = "spring.data.mongo.uri", havingValue = "true")
 public class MongoAuditingConfig {
 
     @Bean

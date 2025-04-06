@@ -2,7 +2,6 @@ package com.stride.tracking.commons.exception;
 
 import com.stride.tracking.commons.contants.Message;
 import com.stride.tracking.commons.response.ErrorResponse;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -64,32 +63,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException exception,
 																		 WebRequest webRequest) {
 		return createErrorResponse(exception, webRequest, HttpStatus.NOT_FOUND);
-	}
-
-	@ExceptionHandler(DataIntegrityViolationException.class)
-	public ResponseEntity<ErrorResponse> handleDatabaseException(DataIntegrityViolationException exception,
-																	 WebRequest webRequest) {
-		String exceptionMessage = exception.getMessage();
-		if (exceptionMessage.contains("Duplicate")) {
-			String errorResponseMessage = findDuplicateKeyExceptionMessage(exceptionMessage);
-
-			return createErrorResponse(errorResponseMessage,
-									   webRequest,
-									   HttpStatus.BAD_REQUEST);
-		} else if (exceptionMessage.contains("not-null")) {
-			return createErrorResponse("A required field is missing in the request",
-									   webRequest,
-									   HttpStatus.BAD_REQUEST);
-		}
-		return createErrorResponse("An error occurred with the database. Please try again",
-								   webRequest,
-								   HttpStatus.BAD_REQUEST);
-	}
-
-	private String findDuplicateKeyExceptionMessage(String exceptionMessage) {
-		exceptionMessage = exceptionMessage.substring(exceptionMessage.indexOf("key") + 5);
-		String key = exceptionMessage.substring(exceptionMessage.indexOf(".") + 1, exceptionMessage.indexOf("'"));
-		return String.format("%s already exists in the system", key);
 	}
 
 	@ExceptionHandler(StrideException.class)

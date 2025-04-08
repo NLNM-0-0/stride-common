@@ -56,7 +56,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(ResourceAlreadyExistException.class)
 	public ResponseEntity<ErrorResponse> handleResourceAlreadyExistException(ResourceAlreadyExistException exception,
 																		 WebRequest webRequest) {
-		return createErrorResponse(exception, webRequest, HttpStatus.BAD_REQUEST);
+		return createErrorResponse(exception, webRequest, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(ResourceNotFoundException.class)

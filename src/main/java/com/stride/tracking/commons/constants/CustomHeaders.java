@@ -1,4 +1,4 @@
-package com.stride.tracking.commons.contants;
+package com.stride.tracking.commons.constants;
 
 public class CustomHeaders {
     private CustomHeaders() {}

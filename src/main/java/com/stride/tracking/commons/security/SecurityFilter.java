@@ -1,7 +1,7 @@
 package com.stride.tracking.commons.security;
 
-import com.stride.tracking.commons.contants.CustomHeaders;
-import com.stride.tracking.commons.contants.StrideConstants;
+import com.stride.tracking.commons.constants.CustomHeaders;
+import com.stride.tracking.commons.constants.StrideConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

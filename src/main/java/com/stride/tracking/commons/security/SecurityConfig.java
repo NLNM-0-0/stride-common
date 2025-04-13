@@ -56,4 +56,9 @@ public class SecurityConfig {
                 .build();
     }
 
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        return new RequestInterceptor();
+    }
+
 }

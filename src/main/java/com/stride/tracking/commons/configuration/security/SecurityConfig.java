@@ -1,4 +1,4 @@
-package com.stride.tracking.commons.security;
+package com.stride.tracking.commons.configuration.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,11 +54,6 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(securityFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
-    }
-
-    @Bean
-    public RequestInterceptor requestInterceptor() {
-        return new RequestInterceptor();
     }
 
 }

@@ -1,6 +1,6 @@
 package com.stride.tracking.commons.utils;
 
-import com.stride.tracking.commons.security.UserDetailsImpl;
+import com.stride.tracking.commons.configuration.security.UserDetailsImpl;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;

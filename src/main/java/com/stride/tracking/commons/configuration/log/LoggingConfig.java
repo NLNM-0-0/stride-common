@@ -1,4 +1,4 @@
-package com.stride.tracking.commons.configuration;
+package com.stride.tracking.commons.configuration.log;
 
 import com.stride.tracking.commons.constants.CustomHeaders;
 import jakarta.servlet.FilterChain;

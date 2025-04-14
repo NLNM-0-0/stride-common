@@ -1,4 +1,4 @@
-package com.stride.tracking.commons.security;
+package com.stride.tracking.commons.configuration.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.stride.tracking.commons.security;
+package com.stride.tracking.commons.configuration.security;
 
 import com.stride.tracking.commons.constants.CustomHeaders;
 import com.stride.tracking.commons.constants.StrideConstants;
@@ -30,7 +30,8 @@ public class SecurityFilter extends OncePerRequestFilter {
         Optional<String> provider = Optional.ofNullable(request.getHeader(CustomHeaders.X_AUTH_PROVIDER));
         Optional<String> authorities = Optional.ofNullable(request.getHeader(CustomHeaders.X_AUTH_USER_AUTHORITIES));
 
-        if (id.isPresent() && provider.isPresent() && authorities.isPresent()) {
+        if (id.isPresent() && userName.isPresent() && email.isPresent()
+                && provider.isPresent() && authorities.isPresent()) {
             UserDetails userDetails = UserDetailsImpl.builder()
                     .id(id.get())
                     .userName(userName.get())

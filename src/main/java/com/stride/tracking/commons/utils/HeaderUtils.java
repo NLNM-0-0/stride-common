@@ -48,20 +48,12 @@ public class HeaderUtils {
     }
 
     private static void putRequestId(Map<String, String> headers) {
-        HttpServletRequest request = getCurrentHttpRequest();
+        HttpServletRequest request = RequestUtils.getCurrentHttpRequest();
         if (request != null) {
             String requestId = request.getHeader(CustomHeaders.X_REQUEST_ID);
             if (requestId != null) {
                 headers.put(CustomHeaders.X_REQUEST_ID, requestId);
             }
         }
-    }
-
-    private static HttpServletRequest getCurrentHttpRequest() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (requestAttributes instanceof ServletRequestAttributes servletRequestAttributes) {
-            return servletRequestAttributes.getRequest();
-        }
-        return null;
     }
 }

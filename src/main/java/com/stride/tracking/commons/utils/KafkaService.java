@@ -19,7 +19,11 @@ public class KafkaService {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(String topic, Object message) {
-        HttpServletRequest currentRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletRequest currentRequest = null;
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (requestAttributes != null) {
+            currentRequest = requestAttributes.getRequest();
+        }
 
         Optional<String> userId = Optional.ofNullable(currentRequest.getHeader(CustomHeaders.X_AUTH_USER_ID));
         Optional<String> username = Optional.ofNullable(currentRequest.getHeader(CustomHeaders.X_AUTH_USERNAME));

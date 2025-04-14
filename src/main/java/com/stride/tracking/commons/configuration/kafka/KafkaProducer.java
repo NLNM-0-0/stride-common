@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class KafkaConsumer {
+public class KafkaProducer {
     private static final String[] FORWARD_HEADER_KEY = {
             CustomHeaders.X_AUTH_USER_ID,
             CustomHeaders.X_AUTH_USERNAME,

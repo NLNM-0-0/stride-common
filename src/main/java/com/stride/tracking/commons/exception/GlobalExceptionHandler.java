@@ -1,7 +1,7 @@
 package com.stride.tracking.commons.exception;
 
 import com.stride.tracking.commons.constants.Message;
-import com.stride.tracking.commons.response.ErrorResponse;
+import com.stride.tracking.commons.dto.ErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

@@ -1,4 +1,4 @@
-package com.stride.tracking.commons.response;
+package com.stride.tracking.commons.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

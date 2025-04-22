@@ -1,7 +1,6 @@
 package com.stride.tracking.commons.configuration.security;
 
 import com.stride.tracking.commons.constants.CustomHeaders;
-import com.stride.tracking.commons.constants.StrideConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,8 +14,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class SecurityFilter extends OncePerRequestFilter {
@@ -38,10 +36,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                     .email(email.get())
                     .provider(provider.get())
                     .password("PASSWORD")
-                    .authorities(authorities.get().equals("[]") ?
-                            Collections.emptyList() : Arrays.stream(authorities.get()
-                            .substring(1, authorities.get().length() - 1)
-                            .split(StrideConstants.DELIMITER_COMMA)).map(SimpleGrantedAuthority::new).toList())
+                    .authorities(List.of(new SimpleGrantedAuthority(authorities.get())))
                     .build();
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

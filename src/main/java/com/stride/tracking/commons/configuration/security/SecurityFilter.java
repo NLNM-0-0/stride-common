@@ -28,11 +28,12 @@ public class SecurityFilter extends OncePerRequestFilter {
         Optional<String> provider = Optional.ofNullable(request.getHeader(CustomHeaders.X_AUTH_PROVIDER));
         Optional<String> authorities = Optional.ofNullable(request.getHeader(CustomHeaders.X_AUTH_USER_AUTHORITIES));
 
-        if (id.isPresent() && userName.isPresent() && email.isPresent()
+        // Username can be null here
+        if (id.isPresent() && email.isPresent()
                 && provider.isPresent() && authorities.isPresent()) {
             UserDetails userDetails = UserDetailsImpl.builder()
                     .id(id.get())
-                    .userName(userName.get())
+                    .userName(userName.orElse(null))
                     .email(email.get())
                     .provider(provider.get())
                     .password("PASSWORD")

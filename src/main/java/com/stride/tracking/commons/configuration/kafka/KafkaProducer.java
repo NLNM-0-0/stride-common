@@ -20,7 +20,8 @@ public class KafkaProducer {
             CustomHeaders.X_AUTH_EMAIL,
             CustomHeaders.X_AUTH_PROVIDER,
             CustomHeaders.X_AUTH_USER_AUTHORITIES,
-            CustomHeaders.X_REQUEST_ID
+            CustomHeaders.X_REQUEST_ID,
+            CustomHeaders.X_USER_TIMEZONE
     };
 
     private final KafkaTemplate<String, Object> kafkaTemplate;

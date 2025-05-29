@@ -39,17 +39,4 @@ public class KafkaListenerInterceptor implements RecordInterceptor<Object, Objec
         }
         return consumerRecord;
     }
-
-    @Bean
-    ConcurrentKafkaListenerContainerFactory<Object, Object> customKafkaListenerContainerFactory(
-            ConsumerFactory<Object, Object> consumerFactory
-    ) {
-        var factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory);
-
-        ContainerProperties containerProps = factory.getContainerProperties();
-        containerProps.setObservationEnabled(true);
-
-        return factory;
-    }
 }

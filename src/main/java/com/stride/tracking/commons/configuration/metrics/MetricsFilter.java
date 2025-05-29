@@ -1,7 +1,6 @@
 package com.stride.tracking.commons.configuration.metrics;
 
 import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.Tags;
 import io.micrometer.core.instrument.Timer;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
@@ -42,11 +41,7 @@ public class MetricsFilter extends OncePerRequestFilter {
 
         AtomicInteger activeRequests = activeRequestsMap.computeIfAbsent(pattern, p -> {
             AtomicInteger ai = new AtomicInteger(0);
-            meterRegistry.gauge(HTTP_API_REQUESTS_ACTIVE,
-                    Tags.of(
-                            "api", p,
-                            "service", serviceName),
-                    ai);
+            meterRegistry.gauge(HTTP_API_REQUESTS_ACTIVE, ai);
             return ai;
         });
 

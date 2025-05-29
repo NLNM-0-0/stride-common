@@ -29,8 +29,6 @@ public class KafkaProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(String topic, Object message) {
-        enableTracing();
-
         ProducerRecord<String, Object> producerRecord = new ProducerRecord<>(topic, null, message);
         Headers headers = producerRecord.headers();
 
@@ -56,9 +54,5 @@ public class KafkaProducer {
                 });
 
         kafkaTemplate.send(producerRecord);
-    }
-
-    private void enableTracing(){
-        kafkaTemplate.setObservationEnabled(true);
     }
 }

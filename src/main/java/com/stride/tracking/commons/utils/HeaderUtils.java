@@ -45,11 +45,6 @@ public class HeaderUtils {
     private static void putRequestHeader(Map<String, String> headers) {
         HttpServletRequest request = RequestUtils.getCurrentHttpRequest();
         if (request != null) {
-            String requestId = request.getHeader(CustomHeaders.X_REQUEST_ID);
-            if (requestId != null) {
-                headers.put(CustomHeaders.X_REQUEST_ID, requestId);
-            }
-
             String timeZone = request.getHeader(CustomHeaders.X_USER_TIMEZONE);
             if (timeZone != null) {
                 headers.put(CustomHeaders.X_USER_TIMEZONE, timeZone);

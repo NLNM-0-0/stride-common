@@ -9,7 +9,8 @@ public class CustomHeaders {
     public static final String X_AUTH_PROVIDER = "X-Auth-Provider";
     public static final String X_AUTH_USER_AUTHORITIES = "X-Auth-User-Authorities";
 
-    public static final String X_REQUEST_ID = "X-Request-ID";
+    public static final String X_TRACE_ID = "X-Trace-Id";
+    public static final String X_SPAN_ID = "X-Span-Id";
 
     public static final String X_USER_TIMEZONE = "X-User-Timezone";
 }

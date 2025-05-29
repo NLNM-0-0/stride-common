@@ -12,7 +12,8 @@ import java.nio.charset.StandardCharsets;
 
 public class KafkaListenerInterceptor implements RecordInterceptor<Object, Object> {
     private static final String[] LOG_HEADER_KEYS = {
-            CustomHeaders.X_REQUEST_ID,
+            CustomHeaders.X_TRACE_ID,
+            CustomHeaders.X_SPAN_ID,
             CustomHeaders.X_AUTH_USER_ID
     };
 

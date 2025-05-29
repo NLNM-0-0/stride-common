@@ -5,6 +5,10 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.header.Header;
 import org.slf4j.MDC;
+import org.springframework.context.annotation.Bean;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.listener.RecordInterceptor;
 import org.springframework.lang.NonNull;
 
@@ -34,5 +38,18 @@ public class KafkaListenerInterceptor implements RecordInterceptor<Object, Objec
             }
         }
         return consumerRecord;
+    }
+
+    @Bean
+    ConcurrentKafkaListenerContainerFactory<Object, Object> customKafkaListenerContainerFactory(
+            ConsumerFactory<Object, Object> consumerFactory
+    ) {
+        var factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory);
+
+        ContainerProperties containerProps = factory.getContainerProperties();
+        containerProps.setObservationEnabled(true);
+
+        return factory;
     }
 }

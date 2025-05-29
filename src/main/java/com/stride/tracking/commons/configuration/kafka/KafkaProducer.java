@@ -2,6 +2,7 @@ package com.stride.tracking.commons.configuration.kafka;
 
 import com.stride.tracking.commons.constants.CustomHeaders;
 import com.stride.tracking.commons.utils.RequestUtils;
+import io.micrometer.tracing.Tracer;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -14,6 +15,8 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class KafkaProducer {
+    private final Tracer tracer;
+
     private static final String[] FORWARD_HEADER_KEY = {
             CustomHeaders.X_AUTH_USER_ID,
             CustomHeaders.X_AUTH_USERNAME,
@@ -26,6 +29,8 @@ public class KafkaProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(String topic, Object message) {
+        enableTracing();
+
         ProducerRecord<String, Object> producerRecord = new ProducerRecord<>(topic, null, message);
         Headers headers = producerRecord.headers();
 
@@ -37,6 +42,23 @@ public class KafkaProducer {
             }
         }
 
+        Optional.ofNullable(tracer.currentSpan())
+                .ifPresent(span -> {
+                    String traceId = span.context().traceId();
+                    String spanId = span.context().spanId();
+
+                    if (!traceId.isEmpty()) {
+                        headers.add(CustomHeaders.X_TRACE_ID, traceId.getBytes());
+                    }
+                    if (!spanId.isEmpty()) {
+                        headers.add(CustomHeaders.X_SPAN_ID, traceId.getBytes());
+                    }
+                });
+
         kafkaTemplate.send(producerRecord);
+    }
+
+    private void enableTracing(){
+        kafkaTemplate.setObservationEnabled(true);
     }
 }

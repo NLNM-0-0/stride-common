@@ -9,6 +9,7 @@ public class KafkaTopics {
     public static final String ACTIVITY_CREATED_TOPIC = "activity_created";
     public static final String ACTIVITY_DELETED_TOPIC = "activity_deleted";
 
+    public static final String SPORT_CREATED_TOPIC = "sport_created";
     public static final String SPORT_UPDATED_TOPIC = "sport_updated";
 
     public static final String USER_CREATED_TOPIC = "user_created";

@@ -27,19 +27,21 @@ public class HeaderUtils {
 
     private static void putAuthInfo(Map<String, String> headers) {
         Authentication authentication = SecurityUtils.getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-            headers.put(CustomHeaders.X_AUTH_USER_ID, userDetails.getId());
-            headers.put(CustomHeaders.X_AUTH_EMAIL, userDetails.getEmail());
-            headers.put(CustomHeaders.X_AUTH_PROVIDER, userDetails.getProvider());
-            headers.put(CustomHeaders.X_AUTH_USERNAME, userDetails.getUsername());
-
-            Optional<? extends GrantedAuthority> firstAuthority = userDetails.getAuthorities().stream().findFirst();
-            firstAuthority.ifPresent(auth ->
-                    headers.put(CustomHeaders.X_AUTH_USER_AUTHORITIES, auth.getAuthority())
-            );
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return;
         }
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        headers.put("X-Auth-User-Id", userDetails.getId());
+        headers.put("X-Auth-Email", userDetails.getEmail());
+        headers.put("X-Auth-Provider", userDetails.getProvider());
+        headers.put("X-Auth-Username", userDetails.getUsername());
+
+        Optional<? extends GrantedAuthority> firstAuthority = userDetails.getAuthorities().stream().findFirst();
+        firstAuthority.ifPresent(
+                auth -> headers.put("X-Auth-User-Authorities", auth.getAuthority())
+        );
     }
 
     private static void putRequestHeader(Map<String, String> headers) {

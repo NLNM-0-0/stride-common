@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.CompletionException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -74,6 +75,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(AccessDeniedException.class)
 	public ResponseEntity<ErrorResponse> handleAccessDeniedException(WebRequest webRequest) {
 		return createErrorResponse(Message.USER_DONT_HAVE_FEATURE, webRequest, HttpStatus.UNAUTHORIZED);
+	}
+
+	@ExceptionHandler(CompletionException.class)
+	public ResponseEntity<ErrorResponse> handleCompletionException(CompletionException exception,
+																   WebRequest webRequest) {
+		Throwable cause = exception.getCause();
+		if (cause instanceof StrideException strideException) {
+			return handleRequestException(strideException, webRequest);
+		}
+
+		return createErrorResponse(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@ExceptionHandler(Exception.class)

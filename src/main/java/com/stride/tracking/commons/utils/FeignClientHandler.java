@@ -10,16 +10,34 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.function.Supplier;
 
-public class InternalFeignHandler {
-    private InternalFeignHandler() {
+public class FeignClientHandler {
+    private FeignClientHandler() {
     }
 
-    public static <T> T callWithErrorHandling(Supplier<ResponseEntity<T>> supplier, String errorMessage) {
+    public static <T> T handleExternalCall(
+            Supplier<ResponseEntity<T>> supplier,
+            HttpStatus httpStatus,
+            String errorMessage
+    ) {
+        ResponseEntity<T> response = supplier.get();
+
+        if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
+            throw new StrideException(httpStatus, errorMessage);
+        }
+
+        return response.getBody();
+    }
+
+    public static <T> T handleInternalCall(
+            Supplier<ResponseEntity<T>> supplier,
+            HttpStatus httpStatus,
+            String errorMessage
+    ) {
         try {
             ResponseEntity<T> response = supplier.get();
 
             if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
-                throw new StrideException(HttpStatus.BAD_REQUEST, errorMessage);
+                throw new StrideException(httpStatus, errorMessage);
             }
 
             return response.getBody();
@@ -33,9 +51,9 @@ public class InternalFeignHandler {
 
                 ErrorResponse errorResponse = mapper.readValue(body, ErrorResponse.class);
 
-                throw new StrideException(HttpStatus.BAD_REQUEST, errorResponse.getMessage());
+                throw new StrideException(httpStatus, errorResponse.getMessage());
             } catch (JsonProcessingException parsingEx) {
-                throw new StrideException(HttpStatus.BAD_REQUEST, errorMessage);
+                throw new StrideException(httpStatus, errorMessage);
             }
         }
     }
